@@ -1,0 +1,20 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Set the height of the main container to the viewport height */
+}
+
+.content-container {
+  display: flex;
+  flex: 1;
+  overflow-y: hidden; /* Hide the main container scrollbar */
+}
+
+.sidebar {
+  overflow-y: auto; /* Enable the sidebar scrollbar */
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto; /* Enable the main content scrollbar */
+}
