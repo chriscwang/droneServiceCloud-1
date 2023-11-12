@@ -289,6 +289,10 @@ class DomMissionManager {
             }
         })
 
+        this.missionMenu.find('.mission-form-simulate').on('click', function (event) {
+            inst.missionManager.simulateMission()
+        })
+
         this.missionMenu.find('.mission-form-clean').on('click', function (event) {
             inst.missionManager.cleanMission()
         })

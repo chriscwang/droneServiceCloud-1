@@ -5,12 +5,13 @@ import { Formik } from "formik";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import { useNavigate } from 'react-router-dom';
-import Map from "../ggleMapRender/Map";
 import TenantIdSingleton from "../../components/TenantId";
 import * as yup from "yup";
 
+
 function CreateMission() {
 
+    const [shouldRedirect, setShouldRedirect] = useState(false)
     const navigate = useNavigate();
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const [missionOptions, setMissionOptions] = useState([
@@ -23,59 +24,30 @@ function CreateMission() {
     const [errorMessage, setErrorMessage] = useState("");
     let userdetails=JSON.parse(window.sessionStorage.getItem("userdetails"));
     const TenantId=userdetails.email;
-    /*
-    const [inputData, setInputData] = useState({
-        TenantId: TenantId,
-        MissionId:"",
-        MissionType: "",
-        Location:"",
-        FlightPlanCooridnates:"",
-        FlightHeight: "",
-        Alerts:""
-        
-    });
-    */
 
     const [maps, setMaps] = useState([{}]);
     const [coords,setCoords]=useState(null);
     console.log("Co-ords from child:",coords);
-
     
-    const handleLocationChange = (e) => {
-        let maps = JSON.parse(window.sessionStorage.getItem("maps"));
-        const activeMap = maps.filter((map) => e.target.value == map.Name);
-        console.log("AM:", activeMap);
-        setCoords({ lat: activeMap[0].Lat, lng: activeMap[0].Long });
-        console.log("C:", coords);
-      };
-      
-    
-
-    useEffect(() => {
-        fetch(`http://localhost:5001/api/getAllMaps/${TenantId}`)
-        .then(res => res.json())
-        .then(data => {setMaps(data); console.log("MAPS:",data);window.sessionStorage.setItem("maps",JSON.stringify(data));});
-    }, []);
-    useEffect(()=>{
-    },[coords])
-
+    const [DroneOptions, setDroneOptions] = useState([
+        { value: 'Drone_001', label: 'Drone_001' },
+        { value: 'Drone_002', label: 'Drone_002' },
+        { value: 'Drone_003', label: 'Drone_003' },
+        { value: 'Drone_004', label: 'Drone_004' },
+        { value: 'Drone_005', label: 'Drone_005' }
+      ]);
 
     const sendRequest = async(values) => {
         await axios.post('http://localhost:5001/api/createMissionPlan',{
             TenantId: TenantId,
-            MissionId:values.MissionId,
-            MissionType:values.MissionType,
-            Location:values.Location,
-            FlightPlanCoordinates: coords,
-            FlightHeight: values.FlightHeight,
-            Alerts: values.Alerts
+            ServiceType:values.ServiceType,
+            DroneId:values.DroneId,
         })
         .then((res) => {
             console.log(res);
         })
         .catch(err=>console.log(err));
     }
-
 
     const handleFormSubmit = async(values) => {
         //e.preventDefault();
@@ -86,11 +58,10 @@ function CreateMission() {
             navigate("/dashboard");
         }
     }
-    console.log("Shakshi:",maps);
 
     return (
         <Box m="20px">
-            <Header title="Create New Mission Plan" />
+            <Header title="Create New Service Mission" />
                 <Formik
                     onSubmit={handleFormSubmit}
                     initialValues={initialValues}
@@ -113,34 +84,21 @@ function CreateMission() {
                                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
                             }}
                             >
-                                <TextField
-                                    fullWidth
-                                    variant="filled"
-                                    type="text"
-                                    label="Mission ID"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    value={values.MissionId}
-                                    name="MissionId"
-                                    error={!!touched.MissionId && !!errors.MissionId}
-                                    helperText={touched.MissionId && errors.MissionId}
-                                    sx={{ gridColumn: "span 4" }}
-                                />
                                 <FormControl
                                     fullWidth
                                     variant="filled"
-                                    error={!!touched.MissionType && !!errors.MissionType}
+                                    error={!!touched.ServiceType && !!errors.ServiceType}
                                     sx={{ gridColumn: "span 4" }}
                                 >
-                                    <InputLabel htmlFor="MissionType">Mission Type</InputLabel>
+                                    <InputLabel htmlFor="ServiceType">Service Type</InputLabel>
                                     <Select
-                                    label="Mission Type"
-                                    value={values.MissionType}
+                                    label="Service Type"
+                                    value={values.ServiceType}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     inputProps={{
-                                        name: "MissionType",
-                                        id: "MissionType",
+                                        name: "ServiceType",
+                                        id: "ServiceType",
                                     }}
                                     >
                                     {missionOptions.map((option) => (
@@ -150,57 +108,42 @@ function CreateMission() {
                                     ))}
                                     </Select>
                                     <FormHelperText>
-                                    {touched.MissionType && errors.MissionType}
+                                    {touched.ServiceType && errors.ServiceType}
                                     </FormHelperText>
                                 </FormControl>
+                                
                                 <FormControl
                                     fullWidth
                                     variant="filled"
-                                    error={!!touched.Location && !!errors.Location}
+                                    error={!!touched.DroneId && !!errors.DroneId}
                                     sx={{ gridColumn: "span 4" }}
                                 >
-                                    <InputLabel htmlFor="Location">Service Location</InputLabel>
+                                    <InputLabel htmlFor="DroneId">Capable Drones for the Service Type</InputLabel>
                                     <Select
-                                        label="Location"
-                                        value={values.Location}
-                                        onChange={(e) => {
-                                            handleLocationChange(e);
-                                            handleChange(e);
-                                          }}
-                                        onBlur={handleBlur}
-                                        inputProps={{
-                                            name: "Location",
-                                            id: "Location",
-                                        }}
-                                    >
-                                        <MenuItem disabled value="">
-                                            Choose Location
-                                        </MenuItem>
-                                        {maps.map((option) => (
-                                            <MenuItem key={option.Name} value={option.Name}>
-                                                {option.Name}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                    <FormHelperText>{touched.Location && errors.Location}</FormHelperText>
-                                </FormControl>
-                                <TextField
-                                    fullWidth
-                                    variant="filled"
-                                    type="text"
-                                    label="Flight Height"
-                                    onBlur={handleBlur}
+                                    label="Capable Drones"
+                                    value={values.DroneId}
                                     onChange={handleChange}
-                                    value={values.FlightHeight}
-                                    name="FlightHeight"
-                                    error={!!touched.FlightHeight && !!errors.FlightHeight}
-                                    helperText={touched.FlightHeight && errors.FlightHeight}
-                                    sx={{ gridColumn: "span 4" }}
-                                />
+                                    onBlur={handleBlur}
+                                    inputProps={{
+                                        name: "DroneId",
+                                        id: "DroneId",
+                                    }}
+                                    >
+                                    {DroneOptions.map((option) => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                        {option.label}
+                                        </MenuItem>
+                                    ))}
+                                    </Select>
+                                    <FormHelperText>
+                                    {touched.DroneId && errors.DroneId}
+                                    </FormHelperText>
+                                </FormControl>
+                                
                             </Box>
                             <Box display="flex" justifyContent="end" mt="20px">
-                                <Button type="submit" color="secondary" variant="contained">
-                                    Create Mission Plan
+                                <Button type="submit" color="secondary" variant="contained" onClick={() => navigate("/dashboard/missionPlanner")}>
+                                    Create Mission
                                 </Button>
                             </Box>
                             {errorMessage && (
@@ -213,23 +156,16 @@ function CreateMission() {
                         </form>
                     )}
                 </Formik>
-                <Map center={coords}/>
         </Box>
     )
 };
 const checkoutSchema = yup.object().shape({
-    MissionId: yup.string().required("required"),
-    MissionType: yup.string().required("required"),
-    Location: yup.string().required("required"),
-    //FlightPlanCooridnates: yup.string().required("required"),
-    FlightHeight: yup.string().required("required"),
-    //Alerts:yup.string().required("required"),
+    ServiceType: yup.string().required("required"),
+    DroneId: yup.string().required("required"),
 });
 const initialValues = {
-    MissionId:"",
-    MissionType: "",
-    Location:"",
-    FlightHeight: "",
+    ServiceType: "",
+    DroneId:"",
 };
 
 export default CreateMission;

@@ -7,7 +7,7 @@ function cesiumCreateViewer(element_id) {
         sceneMode: Cesium.SceneMode.SCENE3D,
         baseLayerPicker: true,
         fullscreenButton: false,
-        timeline: false,
+        timeline: true,
         animation: false,
         vrButton: false,
         homeButton: false,
