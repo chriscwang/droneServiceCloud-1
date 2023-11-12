@@ -21,7 +21,6 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import prof from './user.png'
 
-
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -240,15 +239,9 @@ const Sidebar = () => {
               color={colors.greenAccent[500]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              Mission Planner
+              Mission Manager
             </Typography>
-            <Item
-              title="Mission Planner"
-              to="/dashboard/missionPlanner"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+            
             <Item
               title="Create Mission"
               to="/dashboard/createMission"
@@ -257,36 +250,29 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="Get Missions"
-              to="/dashboard/getMissions"
+              title="Modify Mission"
+              to="/dashboard/modifyMission"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Add Campus Map"
-              to="/dashboard/addMap"
+              title="Delete Mission"
+              to="/dashboard/deleteMission"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Get Campus Maps"
-              to="/dashboard/getMaps"
+              title="Simulate Mission"
+              to="/dashboard/simMission"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Add Video"
-              to="/dashboard/uploadVideo"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Get Videos"
-              to="/dashboard/videos"
+              title="Track Mission"
+              to="/dashboard/trackMission"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -326,7 +312,13 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-
+            <Item
+              title="x"
+              to="/dashboard/missionPlanner"
+              icon={<ReceiptOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
             <Typography
               variant="h6"
               color={colors.greenAccent[500]}

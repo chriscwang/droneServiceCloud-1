@@ -51,7 +51,7 @@ class MissionItem {
     static defaultAutocontinue = 1
 
     static defaultFrame = 3
-    static defaultTerrainAlt = 50.0
+    static defaultTerrainAlt = 100.0
     static defaultHoldTime = 0
     static defaultWPRadius = 3
 

@@ -252,6 +252,19 @@
                         </div>
                      </div>
 
+                     <div class="row align-items-center">
+                        <div class="col-2">
+                           <span>Camera</span>
+                        </div>
+                        <div class="col-8">
+                           <select class="drone-id-select custom-select">
+                              <option value="0">Take Photo</option>
+                              <option value="1">Start Vedio</option>
+                              <option value="2">Stop Vedio</option>
+                           </select>
+                        </div>
+                     </div>
+
                     <!--<div class="row extra-title">
                        <span class="col-10">Extra Params</span>
                        <i class="col-2 fa-solid fa-angles-down"></i>
@@ -807,6 +820,7 @@
                            <div class="btn-group mt-2 mission-menu-group" role="group">
                               <button type="submit" class="mission-form-submit btn btn-primary">Save</button>
                               <button type="submit" class="mission-form-clean btn btn-secondary">Clean</button>
+                              <button type="submit" class="mission-form-simulate btn btn-secondary">Simulate</button>
                            </div>
                        </div>
                        <input type="hidden" name="mission" value="{}" class="mission-json">
