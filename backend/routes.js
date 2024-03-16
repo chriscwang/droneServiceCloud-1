@@ -45,6 +45,7 @@ router.delete('/deleteMapByName', mapFunctions.deleteMapByName);
 router.delete('/deleteAllMaps/:TenantId', mapFunctions.deleteAllMaps);
 // POST - add new mission plan
 router.post('/createMissionPlan', plannerFunctions.createMissionPlan);
+router.post('/createMissionPlanNew', plannerFunctions.createMissionPlanNew);
 // GET - get all mission plans
 router.get('/getAllMissionPlans/:TenantId', plannerFunctions.getAllMissionPlans);
 // GET - get mission plans by mission-type

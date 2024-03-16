@@ -8,28 +8,28 @@ Install for the frontend folder droneServiceCloud:
 
 cd ./droneServiceCloud  --legacy-peer-deps
 
-npm install  
+npm install  --force
 
-npm install @mui/icons-material  
+npm install @mui/icons-material  --force
 
-npm install @emotion/styled  
+npm install @emotion/styled  --force
 
 npm i @nivo/bar@0.59.1 --force  
 
-npm install @craco/craco craco-cesium cesium resium  
+npm install @craco/craco craco-cesium cesium resium  --force
 
 npm i @react-google-maps/api --force  
 
-npm i reactstrap  
+npm i reactstrap  --force
 
-npm i react-toastify  
+npm i react-toastify  --force
 
 
 Then the backend folder backend:
 
 cd backend  
 
-npm install  
+npm install  --force
 
 npm i multer  
 

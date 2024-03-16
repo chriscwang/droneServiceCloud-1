@@ -24,6 +24,31 @@ exports.createMissionPlan = async (req, res) => {
     }
 }
 
+exports.createMissionPlanNew = async (req, res) => {
+    const fs = require('fs');
+    const missionData = req.body;
+
+    if (!missionData.version || !missionData.defaults || !missionData.items) {
+        return res.status(400).json({ error: 'Missing required mission data fields.' });
+    }
+
+    // Define a file name, potentially based on input data or a timestamp to avoid overwriting
+    const fileName = `mission-${Date.now()}.json`;
+
+    // Convert the missionData object to a string
+    const dataString = JSON.stringify(missionData, null, 2); // Beautify the JSON output
+
+    // Write the string to a file
+    fs.writeFile(`./data/${fileName}`, dataString, 'utf8', (err) => {
+        if (err) {
+            console.error('Error writing file:', err);
+            return res.status(500).json({ error: 'Error writing mission data to file.' });
+        }
+
+        console.log('Mission data saved to', fileName);
+        return res.status(200).json({ message: 'Mission plan received and stored successfully.' });
+    });
+}
 
 // fetch all mission plans
 exports.getAllMissionPlans = async (req, res) => {

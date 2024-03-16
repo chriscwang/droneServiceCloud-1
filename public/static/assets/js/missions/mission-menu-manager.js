@@ -173,6 +173,65 @@ class DomMissionManager {
 
         this.formSubmit = this.missionMenu.find('.mission-form-submit')
         this.formSubmit.on('click', function (event) {
+            if (!inst.missionManager.missionHealthy) {
+                return  // TODO add error
+            }
+            console.log("hello! i am going to send data to backend")
+            
+            /*
+            //const data = { key1: 'value1', key2: 'value2' };
+            var JSONmission = inst.missionManager.getJsonMission()
+            const data = JSONmission
+            console.log(data)
+            console.log("JSON.stringfy(data)")
+            console.log(JSON.stringify(data))
+            fetch('http://localhost:5001/api/createMissionPlanNew', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data),
+            })
+            
+            .then(response => response.json())
+            .then(data => console.log('Success:', data))
+            .catch((error) => console.error('Error:', error));
+*/
+            
+            var JSONmission = inst.missionManager.getJsonMission();
+            console.log(JSONmission);
+            const jsonData = JSONmission;
+            // const jsonData = JSON.stringify(JSONmission);
+            // const jsonData = "{\"version\":2,\"defaults\":{\"aircraftType\":\"copter\",\"defaultTerrainAlt\":100,\"defaultHeading\":null,\"defaultSpeed\":5,\"defaultFrame\":3},\"items\":[{\"coordinates\":[37.33611545649612,-121.88442849191375,100],\"pointName\":\"takeoff\",\"frame\":3},{\"coordinates\":[37.33753374692984,-121.88627310887013,100],\"pointName\":\"waypoint\",\"frame\":3},{\"coordinates\":[37.33545497471095,-121.88692192487,100],\"pointName\":\"waypoint\",\"frame\":3},{\"coordinates\":[37.334540148291374,-121.88603642507559,100],\"pointName\":\"waypoint\",\"frame\":3},{\"coordinates\":[37.335987236965536,-121.88450476443029,100],\"pointName\":\"waypoint\",\"frame\":3}],\"location\":\"220 E San Fernando St, San Jose, CA 95112, USA\"}";
+            console.log("JSON.stringfy(JSONmission)")
+            console.log(jsonData);
+            const jsonObject = JSON.parse(jsonData);
+            console.log("jsonObject = JSON.parse(jsonData)")
+            console.log(jsonObject);
+            // Manipulate jsonObject if necessary
+            const jsonStringToSend = JSON.stringify(jsonObject);
+            console.log("JSON.stringfy(jsonObject)")
+            console.log(jsonStringToSend);
+            if (!(jsonStringToSend === jsonData))
+                console.log("caught strang");
+
+            fetch('http://localhost:5001/api/createMissionPlanNew', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: jsonStringToSend,
+            })
+            .then(response => {
+                if (response.headers.get("content-type").includes("application/json")) {
+                    return response.json();
+                } else {
+                    throw new Error('Received non-JSON response from server.');
+                }
+            })
+            .then(data => console.log('Success:', data))
+            .catch((error) => console.error('Error:', error));
+            
             /*const target = $(event.target)
             if (!inst.missionManager.missionHealthy) {
                 return  // TODO add error
