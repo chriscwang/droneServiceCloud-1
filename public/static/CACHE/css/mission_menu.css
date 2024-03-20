@@ -34,6 +34,9 @@
       width: 91%; }
     .mission-form .mission-top .weather-icon {
       font-size: 36px; }
+    .mission-form .mission-top .mission-service-type {
+        line-height: 18px;
+        display: block; }
     .mission-form .mission-top .mission-address {
       line-height: 18px;
       display: block; }
