@@ -1,13 +1,14 @@
 class MissionManager {
-    constructor(viewer, MModeController, alertManager, thumbnailName, generalManager, number, id, service_type, drone_id, tenant_id, mission_id) {
+    constructor(viewer, MModeController, alertManager, thumbnailName, generalManager, number, id) {
         this.viewer = viewer
         this.generalManager = generalManager
         this.number = number
         this.id = id
-        this.service_type = service_type
-        this.drone_id = drone_id
-        this.tenant_id = tenant_id
-        this.mission_id = mission_id
+        console.log("mission manager constructor access gllobal: ", serviceType, droneId, tenantId, missionId)
+        this.service_type = serviceType
+        this.drone_id = droneId
+        this.tenant_id = tenantId
+        this.mission_id = missionId
         console.log("mission manager constructor: ", this.service_type, this.drone_id, this.tenant_id, this.mission_id)
         this.MModeController = MModeController
         this.alertManager = alertManager
